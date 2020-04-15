@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <title>Reactive applications</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link type="text/css" rel="stylesheet" href="style/style.css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+class: center, middle
+
+# Reactive application
+
+---
+class: center, middle
+
+## Reactive system ?
+
+
+![reactive system](./img/reactive-traits.png)
+
+
+[reactivemanifesto.org](https://www.reactivemanifesto.org)
+
+---
+class: center, middle
+
+![ibuprofen](./img/ibuprofen.gif)
+
+---
+class: center, middle
+
+## ✨ Reactive web app ✨
+
+
+![hypster](./img/hipster.jpg)
+
+---
+class: center, middle
+
+> The mother of all reactive applications
+
+---
+class: center, middle
+
+![excel 97](./img/excel-97-splash-screen.webp)
+
+---
+class: center, middle
+
+#### 🕥 Some History 🕐
+
+<iframe width="100%" height="400" src="https://time.graphics/embed?v=1&id=104040" frameborder="0" allowfullscreen></iframe>
+<div><a href="https://time.graphics/fr/line/104040">timeline</a></div>
+
+---
+class: center, middle
+
+From [📄 documents](https://www.gnu.org/licenses/gpl-3.0.en.html)
+
+To [🚀 applications](https://coronavirus.jhu.edu/map.html)
+
+---
+class: center, middle
+
+## Reactivity for web app
+
+
+![reactivity](./img/reactive.gif)
+
+---
+class: center, middle
+
+### Architecture : from pull to push
+
+![push](./img/useless.gif)
+
+---
+class: middle
+
+<table>
+    <thead>
+        <tr>
+            <th></th>
+            <th>Producer</th>
+            <th>Consumer</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th>Pull</th>
+            <td>Passive: produces data when requested.</td>
+            <td><strong>Active</strong>: decides when data is requested.</td>
+        </tr>
+        <tr>
+            <th>Push</th>
+            <td><strong>Active</strong>: produces data at its own pace.</td>
+            <td>Passive: reacts to received data.</td>
+        </tr>
+    </tbody>
+</table>
+---
+class: middle, center
+
+### Data over the time
+
+![cat stream](./img/cat-stream.gif)
+
+---
+class: middle, center
+> How to handle a Data stream ?
+
+---
+class: middle, center
+
+![unix stream](./img/pipe.png)
+
+---
+class: middle, center
+
+#### The Observable pattern
+
+![observable](./img/observable-.jpg)
+
+---
+class: middle, center
+
+
+![fashion](./img/style.jpg)
+
+---
+class: middle, center
+
+![RxJs](./img/rx.png)
+
+[ReactiveX](http://reactivex.io/)
+
+---
+class: middle, center
+
+![Marble filter](./img/marble.png)
+
+[Marble diagrams](https://rxmarbles.com/#from)
+
+---
+class: middle, center
+
+### Reactive rendering ?
+
+![app building](./img/aoo-building.jpg)
+
+---
+class: middle, center
+
+CycleJs / Elm / Angular
+
+https://cycle.js.org/img/cycle-nested-frontpage.svg
+
+Headhache friendly
+Difficult unit testing
+
+https://github.com/krampstudio/tuny/blob/dev/cyclejs/test/components/stringSelector/test.js
+
+
+---
+class: middle, center
+
+#### Svelte
+
+![svelte](./img/svelte.png)
+
+---
+class: center, middle
+
+## The new kid on the block
+
+![the new kids on the block](./img/new-kids-on-the-block_orig.jpg)
+
+
+---
+class: middle, center
+
+```html
+<script>
+  let tempFarenheit = 32;
+  let tempCelcius;
+
+  $: tempCelcius = (tempFarenheit - 32) * 0.55;
+
+</script>
+
+<style>
+  span {
+    font-weight: bold;
+  }
+</style>
+
+<label>
+    Value in F° :
+    <input
+        bind:value={tempFarenheit}
+        type="number" min="0" max="200"
+    />
+</label>
+
+<p>Value in C° : <span>{tempCelcius}</span></p>
+
+```
+✨ [REPL](https://svelte.dev/repl/fe4e0dfd70cc4e7185617489a14ad71c?version=3.15.0) ✨
+
+---
+class: middle, center
+
+### Observable (stores)
+
+![robot](./img/robot.gif)
+
+---
+class: middle, center
+
+```js
+import { writable } from 'svelte/store';
+
+const states = {
+    up : 'up',
+    right : 'right',
+    down : 'down',
+    left : 'left'
+};
+
+function createRobotState() {
+	const { subscribe, set, update } = writable(states.up);
+
+	return {
+        subscribe,
+        set,
+        update,
+        move(newState){
+            set(newState);
+        }
+	};
+}
+
+export const robotState = createRobotState();
+```
+
+---
+class: middle, center
+
+```html
+<script>
+    import { robotState } from './robotState.js';
+</script>
+
+<h1> Robot is {$robotState}</h1>
+
+<button on:click={ () => robotState.move('up') } > ↑ </button>
+<button on:click={ () => robotState.move('right') } > →  </button>
+<button on:click={ () => robotState.move('down') } > ↓ </button>
+<button on:click={ () => robotState.move('left') } > ←  </button>
+
+```
+✨ [REPL](https://svelte.dev/repl/a7d62b3b17d94494997543a17930964f?version=3.16.0) ✨
+
+---
+class: middle, center
+
+🥪 Thank you ! 🥪
+
+
+    </textarea>
+    <script src="js/remark-latest.min.js"></script>
+    <script>
+        var slideshow = remark.create({
+            ratio: '4:3',
+            highlightStyle: 'tomorrow-night-eighties',
+            highlightSpans: false
+        });
+    </script>
+  </body>
+</html>
