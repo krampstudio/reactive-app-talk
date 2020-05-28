@@ -103,13 +103,13 @@ class: middle
 ---
 class: middle, center
 
-### Data over the time
+### React to data over the time
 
 ![cat stream](./img/cat-stream.gif)
 
 ---
 class: middle, center
-> How to handle a Data stream ?
+> How to handle a data stream ?
 
 ---
 class: middle, center
@@ -126,8 +126,12 @@ class: middle, center
 ---
 class: middle, center
 
+#### Stage 1 at TC39
 
 ![fashion](./img/style.jpg)
+
+[observable proposal](https://tc39.es/proposal-observable/)
+
 
 ---
 class: middle, center
@@ -153,14 +157,39 @@ class: middle, center
 ---
 class: middle, center
 
-CycleJs / Elm / Angular
+![elm](./img/elm.png) &nbsp; ![cycle](./img/cycle.png) &nbsp; ![angular](./img/angular.png)
 
-https://cycle.js.org/img/cycle-nested-frontpage.svg
+---
+class: middle, center
 
-Headhache friendly
-Difficult unit testing
 
-https://github.com/krampstudio/tuny/blob/dev/cyclejs/test/components/stringSelector/test.js
+![cycle in cycle](https://cycle.js.org/img/cycle-nested-frontpage.svg)
+
+
+---
+class: middle, center
+
+```js
+function main(sources) {
+  const sinks = {
+    DOM: // transform sources.DOM through
+         // a series of xstreamoperators
+  };
+  return sinks;
+}
+
+const drivers = {
+  DOM: makeDOMDriver('#app') // a Cycle.js helper factory
+};
+
+run(main, drivers); // solve the circular dependency
+```
+✨ [REPL](https://jsbin.com/nucepu/4/edit?js,output)✨
+
+---
+class: middle, center
+
+### What do you think ?
 
 
 ---
@@ -173,13 +202,15 @@ class: middle, center
 ---
 class: center, middle
 
-## The new kid on the block
+### The new kid on the block
 
 ![the new kids on the block](./img/new-kids-on-the-block_orig.jpg)
 
 
 ---
 class: middle, center
+
+#### Reactive by design
 
 ```html
 <script>
@@ -189,12 +220,6 @@ class: middle, center
   $: tempCelcius = (tempFarenheit - 32) * 0.55;
 
 </script>
-
-<style>
-  span {
-    font-weight: bold;
-  }
-</style>
 
 <label>
     Value in F° :
@@ -212,7 +237,7 @@ class: middle, center
 ---
 class: middle, center
 
-### Observable (stores)
+#### Observable (stores)
 
 ![robot](./img/robot.gif)
 
@@ -244,7 +269,6 @@ function createRobotState() {
 
 export const robotState = createRobotState();
 ```
-
 ---
 class: middle, center
 
@@ -263,6 +287,32 @@ class: middle, center
 ```
 ✨ [REPL](https://svelte.dev/repl/a7d62b3b17d94494997543a17930964f?version=3.16.0) ✨
 
+---
+class: middle, center
+
+### Svelte + RxJs
+
+![catdog](./img/catdog.gif)
+
+---
+class: middle, center
+
+```html
+<script>
+  import { interval, of } from "rxjs";
+  import { map, take, startWith, delay } from "rxjs/operators";
+
+  const counter = interval(1000).pipe(
+    map(i => i + 1),
+    take(10)
+  );
+</script>
+
+<h2>Count to 10</h2>
+
+<span>{$counter}</span>
+```
+✨ [REPL](https://svelte.dev/repl/8627549091d14c97a76a2aedacbc263b?version=3.20.1) ✨
 ---
 class: middle, center
 
